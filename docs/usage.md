@@ -1,17 +1,17 @@
-# plex-monitoring — Dashboard Usage
+# Dashboard usage
 
-Import the JSON files using **Grafana → Dashboards → New → Import**. Set the data source and variables listed in [configuration](./configuration.md).
+Import the JSON files using **Grafana → Dashboards → New → Import**. Set the data source and variables listed in [configuration](configuration.md).
 
 ## Plex Application Overview
 
-Source: [plex-application.json](../dashboards/plex-application.json). Refresh: `30s`.
+Source: [`dashboards/plex-application.json`](https://github.com/willtheorangeguy/plex-monitoring/blob/HEAD/dashboards/plex-application.json). Refresh: `30s`.
 
 <!-- Screenshot: after adding plex-application.png to .github/icons/plex-monitoring/, replace this comment with ![Plex Application Overview](https://raw.githubusercontent.com/willtheorangeguy/.github/main/icons/plex-monitoring/plex-application.png). -->
 
 ### Panels
 
 | Panel | Type | What it shows |
-|---|---|---|
+| --- | --- | --- |
 | Service Health | stat | Prometheus scrape, Plex HTTP API, session polling, and the sanitizer must all be healthy. |
 | Active Sessions | stat | Total active Plex playback sessions without viewer or media identity labels. |
 | Direct Play | stat | Sessions whose video and audio are played directly by the client. |
