@@ -1,0 +1,28 @@
+
+services:
+  plex-exporter:
+    image: ghcr.io/cplieger/plex-exporter@sha256:a101de70e259df5f0e658d78c4478a2e42c35e647a80237547221b6396372239
+    restart: unless-stopped
+    environment:
+      PLEX_URL: ${PLEX_URL:?Set PLEX_URL}
+      PLEX_TOKEN_FILE: /run/secrets/plex_token
+    volumes:
+      - ./secrets/plex-token:/run/secrets/plex_token:ro
+    expose: ["9594"]
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+  plex-metrics-sanitizer:
+    build: ./sanitizer
+    restart: unless-stopped
+    depends_on: [plex-exporter]
+    environment:
+      UPSTREAM_URL: http://plex-exporter:9594/metrics
+      EXPORTER_BEARER_TOKEN_FILE: /run/secrets/exporter_bearer_token
+    volumes:
+      - ./secrets/metrics-token:/run/secrets/exporter_bearer_token:ro
+    ports:
+      - "${BIND_IP:-127.0.0.1}:9594:9594"
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]

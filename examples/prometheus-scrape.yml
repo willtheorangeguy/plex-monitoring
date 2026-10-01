@@ -1,0 +1,7 @@
+# Add these entries under scrape_configs in prometheus.yml. Replace example hosts and token paths.
+- job_name: plex
+  authorization:
+    type: Bearer
+    credentials_file: /etc/prometheus/secrets/plex-sanitizer.token
+  static_configs:
+    - targets: [plex-sanitizer.example:9594]
